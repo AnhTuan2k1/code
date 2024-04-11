@@ -1,5 +1,8 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 public class HelloWorld {
     public static void main(String[] args) {
@@ -23,6 +26,7 @@ public class HelloWorld {
 
 
         System.out.println("Hello");
+        System.out.println(FindMinPerfectValue151(array));
         System.out.println(IncreaseNum60(15570));
         System.out.println(CountNum43(2101));
         System.out.println(SumNum44(2101));
@@ -777,6 +781,23 @@ public class HelloWorld {
         return i;
     }
 
+    //88. Hãy sử dụng vòng lặp for để xuất tất cả các ký tự A tới Z.
+    public static void Charr88(){
+        for (char ch = 'A'; ch <= 'Z'; ch++) {
+            System.out.print(ch + " ");
+        }
+    }
+
+    //89. Viết chương trình tính tổng các giá trị lẻ nguyên dương nhỏ hơn N.
+    public static int Sum89(int n){
+        int s = 0;
+        while (n > 1) {
+            n--;
+            if(n%2==1) s+=n;
+        }
+        return s;
+    }
+
     //90. Viết chương trình tìm số nguyên dương m lớn nhất sao cho 1 + 2 + 3 + ... + m < N.
     public static int FindMax90(int n){
         int s = 0;
@@ -787,6 +808,29 @@ public class HelloWorld {
         }
 
         return 0;
+    }
+
+    //91. In tất cả các số nguyên dương lẻ nhỏ hơn 100.
+    public static void PrintPositive91(){
+        for (int i = 0; i < 100; i+=2) {
+            System.out.println(i);
+        }
+    }
+
+    //92. Tìm ước số chung lớn nhất của hai số nguyên dương.
+    public static int MaxDivisor92(int a, int b){
+        for (int i = a; i > 1; i--) {
+            if(a%i==0 && b%i==0) return i;
+        }
+
+        return 1;
+    }
+
+    //94. Viết chương trình In ra tất cả các số lẻ nhỏ hơn 100 trừ các số 5, 7, 93.
+    public static void PrintOdd94(){
+        for (int i = 1; i < 100; i+=2) {
+            if(i != 5 && i!=7 && i!=93) System.out.println(i);
+        }
     }
 
     //100.Viết chương trình giải phương trình bậc 2.
@@ -804,6 +848,26 @@ public class HelloWorld {
         } else {
             System.out.println("không có nghiệm.");
         }
+    }
+
+    //101.Viết chương trình nhập tháng, năm. Hãy cho biết tháng đó có bao nhiêu ngày.
+    public static int DaysOfMonth(int month, int year){
+        int days = 0;
+        switch (month) {
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                days = 31;
+                break;
+            case 4: case 6: case 9: case 11:
+                days = 30;
+                break;
+            case 2:
+                if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+                days = 29;
+                else days = 28;
+                break;
+            default:
+        }
+        return days;
     }
 
     //105.Viết chương trình nhập một số nguyên có hai chữ số. Hãy in ra cách đọc của số nguyên này.
@@ -837,6 +901,37 @@ public class HelloWorld {
         System.out.println();
     }
 
+    //122.Tìm giá trị lớn nhất trong mảng một chiều.
+    public static int Max122(int[] array) {
+        int max = -999999;
+        for (int num : array) {
+            if (max < num) max = num;
+        }
+        return max;
+    }
+
+    //123.Viết hàm tìm một vị trí mà giá trị tại vị trí đó là một giá trị nhỏ nhất trong mảng một chiều các số nguyên.
+    public static int IndexOfMin123(int[] array) {
+        int min = array[0];
+        int index = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (min < array[i]) {
+                min = array[i];
+                index = i;
+            }
+        }
+        
+        return index;
+    }
+
+    //124. Viết hàm kiểm tra trong mảng các số nguyên có tồn tại giá trị chẵn nhỏ hơn 2004 hay không?
+    public static boolean ExistEven124(int[] array) {
+        for (int i : array) {
+            if(i%2==0 && i < 2004) return true;
+        }
+        return false;
+     }
+
     //125.Viết hàm đếm số lượng số nguyên tố nhỏ hơn 100 trong mảng.
     public static int CountPrime120(int[] array) {
         int count = 0;
@@ -859,12 +954,70 @@ public class HelloWorld {
         return true;
     }
 
+    //126.Viết hàm tính tổng các giá trị âm trong mảng một chiều các số thực.
+    public static float SumNegative126(int[] array) {
+        float s = 0;
+        for (int num : array) {
+            if(num < 0) s+= num;
+        }
+        return s;
+     }
+
+     //127.Viết hàm sắp xếp mảng một chiều các số thực tăng dần.
+    public static int[] Sort127(int[] array) {
+        Arrays.sort(array);
+        return array;
+    }
+
+    //134.Viết hàm tìm “giá trị lớn nhất” trong mảng một chiều số thực
+    public static int Max134(int[] array) {
+        return Arrays.stream(array).max().getAsInt();
+    }
+
     //135.Tìm “giá trị dương đầu tiên” trong mảng một chiều (duongdau). Nếu mảng không có giá trị dương thì trả về giá trị -1.
     public static int FindFirstPositiveValue135(int[] array) {
         for (int num : array) {
             if (num > 0) {
                 return num;
             }
+        }
+        return -1;
+    }
+
+    //136.Tìm “số chẵn cuối cùng” trong mảng một chiều các số nguyên(chancuoi). Nếu mảng không có giá trị chẵn thì trả về giá trị -1.
+    public static int FindLastPositiveValue136(int[] array) {
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(array[i] % 2 == 0) return array[i];
+        }
+        return -1;
+    }
+
+    //137.Tìm “một vị trí mà giá trị tại vị trí đó là giá trị nhỏ nhất” trong mảng một chiều các số thực
+    public static int FindIndexMinValue137(int[] array) {
+        int min = Arrays.stream(array).min().getAsInt();
+
+        for (int i = 0; i < array.length; i++) {
+            if(min == array[i]) return i;
+        }
+        return -1;
+    }
+
+    //138.Tìm “vị trí của giá trị chẵn đầu tiên” trong mảng một chiều các số
+    //nguyên (vitrichandau). Nếu mảng không có giá trị chẵn thì hàm sẽ trả
+    //về giá trị là – 1.
+    public static int FindIndexFirstPositiveValue138(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if(array[i] % 2 == 0) return i;
+        }
+        return -1;
+    }
+
+    //139.Tìm “vị trí số hoàn thiện cuối cùng” trong mảng một chiều các số
+    //nguyen (vitrihoanthiencuoi). Nếu mảng không có số hoàn thiện thì trả
+    //về giá trị - 1.
+    public static int FindIndexLastPerfectValue139(int[] array) {
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(IsPerfect30(array[i])) return i;
         }
         return -1;
     }
@@ -884,12 +1037,72 @@ public class HelloWorld {
         return foundPositive?minPositive:-1;
     }
 
+    //142.Tìm “giá trị nhỏ nhất” trong mảng một chiều số thực.
+    public static int FindMinValue142(int[] array) {
+        return Arrays.stream(array).min().getAsInt();
+    }
+
+    //143.Viết hàm tìm “số chẵn đầu tiên” trong mảng các số nguyên (chandau).
+    //Nếu mảng không có giá trị chẵn thì hàm sẽ trả về giá trị không chẵn là -1.
+    public static int FindFirstPositiveValue143(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if(array[i] % 2 == 0) return array[i];
+        }
+        return -1;
+    }
+
+    //144.Tìm “số nguyên tố đầu tiên” trong mảng một chiều các số nguyên
+    //(nguyentodau). Nếu mảng không có số nguyên tố thì trả về giá trị -1.
+    public static int FindFirstPositiveValue144(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if(IsPrime31(array[i])) return array[i];
+        }
+        return -1;
+    }
+
     //145. 
     public static int FindFirstPerfectNumber145(int[] array) {
         for (int num : array) {
             if (IsPerfect30(num)) {
                 return num;
             }
+        }
+        return -1;
+    }
+
+    //146.Tìm giá trị âm đầu tiên trong mảng một chiều các sô thực (amdau). Nếu
+    //mảng không có giá trị âm thì trả về giá trị không âm là giá trị 1.
+    public static int FindFirstPositiveValue146(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if(array[i]<0) return array[i];
+        }
+        return 1;
+    }
+
+    //147.Tìm “số dương cuối cùng” trong mảng số thực (duongcuoi). Nếu mảng
+    //không có giá trị dương thì trả về giá trị - 1.
+    public static int FindLastPositiveValue139(int[] array) {
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(array[i] > 0) return array[i];
+        }
+        return -1;
+    }
+
+    //148.Tìm “số nguyên tố cuối cùng” trong mảng một chiều các số nguyên
+    //(nguyentocuoi). Nếu mảng không có số nguyên tố thì trả về giá trị -1.
+    public static int FindLastPrimeValue139(int[] array) {
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(IsPrime31(array[i])) return array[i];
+        }
+        return -1;
+    }
+
+    //149.Tìm “số hoàn thiện cuối cùng” trong mảng một chiều các số nguyên
+    //(hoanthiencuoi). Nếu mảng không có số hoàn thiện thì hàm sẽ trả về
+    //giá trị -1.
+    public static int FindLastPerfectValue139(int[] array) {
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(IsPerfect30(array[i])) return array[i];
         }
         return -1;
     }
@@ -907,6 +1120,46 @@ public class HelloWorld {
         return maxNegative == -99999 ? 0 : maxNegative;
     }
 
+    //151.Hãy tìm “số nguyên tố lớn nhất” trong mảng một chiều các số nguyên
+    //(nguyentolonnhat). Nếu mảng không có số nguyên tố thì trả về giá trị 0.
+    public static int FindMaxPrimeValue151(int[] array) {
+        int prime = -1;
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(array[i] > prime && IsPrime31(array[i])) prime = array[i];
+        }
+        return prime;
+        //return Arrays.stream(array).filter(num->IsPrime31(num)).min().getAsInt();
+    }
+
+    //152.Hãy tìm “hoàn thiện nhỏ nhất” trong mảng một chiều các số nguyên
+    //(hoanthiennhonhat). Nếu mảng không có số hoàn thiện thì trả về giá trị 0.
+    public static int FindMinPerfectValue152(int[] array) {
+        int perfect = -1;
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(array[i] < perfect && IsPerfect30(array[i])) perfect = array[i];
+        }
+        return perfect == -1 ? 0 : perfect;
+    }
+
+    //153.Hãy tìm “giá trị chẵn nhỏ nhất” trong mảng một chiều các số nguyên
+    //(channhonhat). Nếu mảng không có giá trị chẵn thì trả về giá trị không
+    //chẵn là -1.
+    public static int FindMinEvenValue152(int[] array) {
+        int even = -1;
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(array[i] < even && array[i]%2==0) even = array[i];
+        }
+        return even;
+    }
+    //154.Hãy tìm “vị trí giá trị âm lớn nhất” trong mảng các số thực
+    //(vtamlonnhat). Nếu mảng không có giá trị âm thì trả về -1.
+    public static int FindMaxNegativeValue151(int[] array) {
+        int negative = 1;
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(array[i] > negative && array[i] < 0) negative = array[i];
+        }
+        return negative == 1 ? -1 : negative;
+    }
     //165. 
     static int FindFirstValueWithOdd165(int[] array) {
         for (int num : array) {
