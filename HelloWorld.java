@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.PrimitiveIterator;
 
 public class HelloWorld {
     public static void main(String[] args) {
@@ -1476,8 +1477,8 @@ trong mảng các số nguyên (tuongquanchanle)
     //226.Hãy xác định số lượng các phần tử kề nhau mà cả hai đều chẵn
     public static int CountCloseEvenValue226(int[] array) {
         int count = 0;
-        for (int i = 0; i < array.length/2; i++) {
-            if(array[i]%2 == 0 && array[array.length - i - 1]%2 == 0) count++;
+        for (int i = 0; i < array.length; i++) {
+            if(array[i]%2 == 0 && array[i + 1]%2 == 0) count++;
         }
         return count;
     }
@@ -1485,8 +1486,8 @@ trong mảng các số nguyên (tuongquanchanle)
     //227.Hãy xác định số lượng các phần tử kề nhau mà cả hai số trái dấu nhau
     public static int CountCloseOppositeSignValue227(int[] array) {
         int count = 0;
-        for (int i = 0; i < array.length/2; i++) {
-            if(array[i] * array[array.length - i - 1] < 0) count++;
+        for (int i = 0; i < array.length; i++) {
+            if(array[i] * array[i + 1] < 0) count++;
         }
         return count;
     }
@@ -1495,17 +1496,113 @@ trong mảng các số nguyên (tuongquanchanle)
     //số đứng trước và có giá trị tuyệt đối lớn hơn
     public static int CountCloseSameSignValue228(int[] array) {
         int count = 0;
-        for (int i = 0; i < array.length/2; i++) {
+        for (int i = 0; i < array.length; i++) {
             if(array[i] * array[array.length - i - 1] < 0
-            && array[i] < Math.abs(array[array.length - i - 1])) count++;
+            && array[i] < Math.abs(array[i + 1])) count++;
         }
         return count;
+    }
+
+    //229.Hãy đếm số lượng các giá trị phân biệt có trong mảng
+    public static double CountDistinctValue229(int[] array) {
+        return Arrays.stream(array).distinct().count();
+    }
+
+    //240.Hãy kiểm tra mảng số nguyên có tồn tại giá trị không hay không? Nếu
+    //không tồn tại giá trị không trả về giá trị 0, ngược lại trả về 1
+    public static int ExistZeroValue240(int[] array) {
+        return Arrays.stream(array).anyMatch(value->value==0)?1:0;
+    }
+
+    //241.Hãy kiểm tra mảng số nguyên có tồn tại hai giá trị không liên tiếp hay
+    //không ?(haikhong).
+    public static boolean Exist2ZeroValue241(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            if(array[i] == 0 && array[i + 1] == 0) return true;
+        }
+        return false;
+    }
+
+    //242.Hãy kiểm tra mảng số nguyên có tồn tại giá trị chẵn hay không? Nếu
+    //không tồn tại giá trị chẵn trả về giá trị 0, hay ngược lại trả về 1.
+    public static int ExistEvenValue242(int[] array) {
+        return Arrays.stream(array).anyMatch(value->value%2==0)?0:1;
+    }
+
+    //243.Hãy kiểm tra mảng số nguyên có tồn tại số nguyên tố hay không? Nếu
+    //có trả về 1, nếu không trả về 0
+    public static int ExistPrimeValue243(int[] array) {
+        return Arrays.stream(array).anyMatch(value->IsPrime31(value))?1:0;
+    }
+
+    //244.Hãy kiểm tra mảng có thỏa mãn tính chất sau không: “Mảng không có
+    //tồn tại số hoàn thiện lớn hơn 256”. Nếu thỏa trả về 1, nếu không trả về 0
+    public static int ExistPerfectValue244(int[] array) {
+        return Arrays.stream(array).anyMatch(value-> value>256 && IsPerfect30(value))?1:0;
+    }
+
+    //245.Hãy cho biết mảng các số nguyên có toàn số chẵn hay không? Nếu có
+   //tồn tại giá trị lẻ trả về giá trị 0, ngược lại trả về 1 .
+    public static int ExistOddValue2(int[] array) {
+        return Arrays.stream(array).anyMatch(value-> value%2 == 1)?0:1;
+    }
+
+    //246.Hãy kiểm tra mảng một chiều các số thực có đối xứng hay không?
+    public static boolean SymmetricValue246(int[] array) {
+        for (int i = 0; i < array.length/2; i++) {
+            if(array[i] != array[array.length - i - 1]) return false;
+        }
+        return true;
+    }
+
+    //247.Ta định nghĩa một mảng có tính chẵn lẻ, khi tổng của hai phần tử liên
+    //tiếp trong mảng luôn luôn là số lẻ. Hãy viết hàm kiểm tra mảng a có
+    //tính chẵn lẻ hay không?
+    public static boolean EvenOddArray246(int[] array) {
+        for (int i = 0; i < array.length-1; i++) {
+            if((array[i] + array[i+1])%2 == 0) return false;
+        }
+        return true;
+    }
+
+    //248.Hãy kiểm tra mảng có tăng dần hay không?
+    public static boolean IncreasingArray248(int[] array) {
+        for (int i = 0; i < array.length -1; i++) {
+            if(array[i] > array[i+1]) return false;
+        }
+        return true;
+    }
+
+    //249.Hãy kiểm tra mảng có giảm dần hay không?.
+    public static boolean DecreasingArray249(int[] array) {
+        for (int i = 0; i < array.length -1; i++) {
+            if(array[i] < array[i+1]) return false;
+        }
+        return true;
+    }
+
+    //250.Hãy cho biết các phần tử trong mảng có lập thành cấp số cộng không?
+    //Nếu có hãy chỉ ra công sai
+    public static int ArithmeticProgression250(int[] array) {
+        int a = array[1] - array[0];
+        for (int i = 0; i < array.length -1; i++) {
+            if(array[i+1] - array[i] != a) return 0;
+        }
+        return a;
+    }
+
+    //251.Hãy cho biết các phần tử trong mảng có bằng nhau không?
+    public static boolean EqualValue251(int[] array) {
+        for (int i = 0; i < array.length -1; i++) {
+            if(array[i] != array[i+1]) return false;
+        }
+        return true;
     }
 
     //300.Đếm số lượng mảng con giảm trong mảng một chiều
     public static int CountDecreasingArray300(int[] array) {
         int count = 0;
-        boolean canCount = true; 
+        boolean canCount = true;
         for (int i = 0; i < array.length - 1; i++) {
             if( canCount && array[i] > array[i+1]){
                 count++;
