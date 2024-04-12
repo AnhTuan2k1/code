@@ -1411,11 +1411,101 @@ public class HelloWorld {
     }
 
     //212.Tính trung bình cộng các số dương trong mảng một chiều các số thực.
+    public static double AveragePositiveValue211(int[] array) {
+        return Arrays.stream(array).filter(value-> value > 0).average().orElse(0);
+    }
+
+    //213.Tính trung bình cộng các giá trị lớn hơn giá trị x trong mảng một chiều.
+    public static double AverageBiggerXValue213(int[] array, int x) {
+        return Arrays.stream(array).filter(value-> value > x).average().orElse(0);
+    }
+
+    //216.Đếm số lượng số chẵn có trong mảng một chiều
+    public static double CountEvenValue216(int[] array) {
+        return Arrays.stream(array).filter(value-> value%2 == 0).count();
+    }
+
+    //217.Đếm số lượng giá trị dương chia hết cho 7 trong mảng một chiều các số nguyên.
+    public static double CountEven7Value217(int[] array) {
+        return Arrays.stream(array).filter(value-> value%7 == 0).count();
+    }
+
+    //219.Đếm số lần xuất hiện của giá trị x trong mảng một chiều các số thực
+    public static double CountEven7Value219(int[] array, int x) {
+        return Arrays.stream(array).filter(value-> value == x).count();
+    }
+
+    //220.Hãy đếm số lượng giá trị có chữ số tận cùng bằng 5 trong mảng các số nguyên.
+    public static double CountLast5Value219(int[] array) {
+        return Arrays.stream(array).filter(value-> value%10 == 5).count();
+    }
+
+    /**
+     * 221.Hãy cho biết sự tương quan giữa số lượng số chẵn và số lượng số lẻ
+trong mảng các số nguyên (tuongquanchanle)
+* Hàm này trả về một trong ba giá trị -1, 0, và 1.
+* Giá trị -1 có nghĩa số lượng số chẵn nhiều hơn số lẻ.
+* Giá trị 0 có nghĩa số lượng số lẻ bằng số lượng số chẵn
+* Giá trị 1 có nghĩa số lẻ nhiều hơn số chẵn.
+     */
+    public static int Tuongquanchanle221(int[] array) {
+        int even = (int)Arrays.stream(array).filter(value-> value%2 == 0).count();
+
+        if(even > array.length/2f)return -1;
+        else if(even == array.length/2f)return 0;
+        else return 1;
+        
+    }
+
+    //223.Hãy đếm số lượng “số nguyên tố” có trong mảng một chiều
+    public static double CountPrimeValue223(int[] array) {
+        return Arrays.stream(array).filter(value-> IsPrime31(value)).count();
+    }
+
+    //224.Hãy đếm số lượng “số hoàn thiện” có trong mảng một chiều
+    public static double CountPerfectValue223(int[] array) {
+        return Arrays.stream(array).filter(value-> IsPerfect30(value)).count();
+    }
+
+    //225.Hãy đếm số lượng các giá trị lớn nhất có trong mảng một chiều
+    public static double CountMaxValue223(int[] array) {
+        int max = Arrays.stream(array).max().getAsInt();
+        return Arrays.stream(array).filter(value-> value == max).count();
+    }
+
+    //226.Hãy xác định số lượng các phần tử kề nhau mà cả hai đều chẵn
+    public static int CountCloseEvenValue226(int[] array) {
+        int count = 0;
+        for (int i = 0; i < array.length/2; i++) {
+            if(array[i]%2 == 0 && array[array.length - i - 1]%2 == 0) count++;
+        }
+        return count;
+    }
+
+    //227.Hãy xác định số lượng các phần tử kề nhau mà cả hai số trái dấu nhau
+    public static int CountCloseOppositeSignValue227(int[] array) {
+        int count = 0;
+        for (int i = 0; i < array.length/2; i++) {
+            if(array[i] * array[array.length - i - 1] < 0) count++;
+        }
+        return count;
+    }
+
+    //228.Hãy xác định số lượng các phần tử kề nhau mà số đứng sau cùng dấu
+    //số đứng trước và có giá trị tuyệt đối lớn hơn
+    public static int CountCloseSameSignValue228(int[] array) {
+        int count = 0;
+        for (int i = 0; i < array.length/2; i++) {
+            if(array[i] * array[array.length - i - 1] < 0
+            && array[i] < Math.abs(array[array.length - i - 1])) count++;
+        }
+        return count;
+    }
 
     //300.Đếm số lượng mảng con giảm trong mảng một chiều
     public static int CountDecreasingArray300(int[] array) {
         int count = 0;
-        boolean canCount = true;
+        boolean canCount = true; 
         for (int i = 0; i < array.length - 1; i++) {
             if( canCount && array[i] > array[i+1]){
                 count++;
