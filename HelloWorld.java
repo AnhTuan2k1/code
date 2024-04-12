@@ -1640,6 +1640,34 @@ trong mảng các số nguyên (tuongquanchanle)
         return p;
     }
 
+    //333.TÍnh tổng các số hoàn thiện trong ma trận các số nguyên.
+    public static int SumPerfect333(int[][] matrix) {
+        int s = 0;
+
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (IsPerfect30(num)) {
+                    s *= num;
+                }
+            }
+        }
+        return s;
+    }
+
+    //334.Viết hàm đếm số lượng số dương trong ma trận
+    public static int SumPositive334(int[][] matrix) {
+        int count = 0;
+
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (num>0) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     //335.Đếm số lượng số nguyên tố trong ma trận các số nguyên.
     public static int CountPrimes335(int[][] matrix) {
         int count = 0;
@@ -1653,6 +1681,28 @@ trong mảng các số nguyên (tuongquanchanle)
         }
 
         return count;
+    }
+
+    //348.Kiểm tra ma trận có tồn tại số dương hay không.
+    public static boolean ExistPositive348(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (num > 0) return true;
+            }
+        }
+
+        return false;
+    }
+
+    //349.Kiểm tra ma trận có tồn tại số hoàn thiện hay không.
+    public static boolean ExistPerfect349(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (IsPerfect30(num)) return true;
+            }
+        }
+
+        return false;
     }
 
     //350.Kiểm tra ma trận có tồn tại số lẻ hay không.
@@ -1677,6 +1727,92 @@ trong mảng các số nguyên (tuongquanchanle)
         return true;
     }
 
+    //366.Tìm số chẵn xuất hiện đầu tiên trong ma trận số nguyên.
+    public static int FindFirstEven366(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (num%2 == 0) return num;
+            }
+        }
+
+        return 1;
+    }
+
+    //367.Tìm giá trị lớn nhất trong ma trận.
+    public static int FindBiggestvalue367(int[][] matrix) {
+        return Arrays.stream(matrix).flatMapToInt(Arrays::stream).max().orElse(0);
+    }
+
+    //369.Tìm giá trị dương đầu tiên trong ma trận.
+    public static int FindFirstPositive369(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (num > 0) return num;
+            }
+        }
+        return -1;
+    }
+
+    //370.Tìm giá trị âm lớn nhất trong ma trận.
+    public static int FindBiggestNegative370(int[][] matrix) {
+        int negative = 1;
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (num < 0 && num > negative) return negative = num;
+            }
+        }
+
+        return negative;
+    }
+
+    //374.Tìm số nguyên tố đầu tiên trong ma trận các số nguyên.
+    public static int FindFirstPrime374(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (IsPrime31(num)) return num;
+            }
+        }
+        return 1;
+    }
+
+    //375.Tìm số chẵn lớn nhất trong ma trận các số nguyên.
+    public static int FindBiggestEven375(int[][] matrix) {
+        int even = 1;
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (num%2 == 0 && num > even) return even = num;
+            }
+        }
+
+        return even;
+    }
+
+    //376.Tìm giá trị dương nhỏ nhất trong ma trận các số thực.
+    public static int FindMinPositive376(int[][] matrix) {
+        int min = 99999;
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (num > 0 && num < min) return min = num;
+            }
+        }
+
+        return min;
+    }
+
+    //377.Tìm số nguyên tố lớn nhất trong ma trận các số nguyên.
+    public static int FindMaxPrime377(int[][] matrix) {
+        int prime = 99999;
+        for (int[] row : matrix) {
+            for (int num : row) {
+                if (num > prime && IsPrime31(num)) return prime = num;
+            }
+        }
+
+        return prime;
+    }
+
+    
+
     //704.Cho mảng một chiều các số nguyên. Viết hàm tính tổng các số chẵn trong mảng bằng phương pháp đệ qui.
     public static int SumEvenRecursive704(int[] array, int index) {
         if (index >= array.length)  return 0;
@@ -1686,6 +1822,45 @@ trong mảng các số nguyên (tuongquanchanle)
             return currentNumber + SumEvenRecursive704(array, index + 1);
         } 
         else return SumEvenRecursive704(array, index + 1);
+    }
+
+    //705.Cho mảng một chiều các số thực. Viết hàm đếm số lượng giá trị dương
+    //trong mảng bằng phương pháp đệ qui.
+    public static int SumPositiveRecursive705(int[] array, int index) {
+        if (index >= array.length)  return 0;
+
+        if (array[index] > 0) {
+            return 1 + SumPositiveRecursive705(array, index + 1);
+        } 
+        else return SumPositiveRecursive705(array, index + 1);
+    }
+
+    //710.Viết hàm đệ qui tính tổng của biểu thức
+    public static float SumRecursive710(int x, int n) {
+        if(n > 0) return Power10(x, n)/Factorial9(n) + SumRecursive710(x, n);
+        else return 0;
+    }
+
+    //722.Cho mảng một chiều các ố thực. Hãy viết hàm đệ quy tính tổng các giá
+    //trị có trong mảng.
+    public static float SumRecursive722(int[] array, int index) {
+        if (index >= array.length) return 0;
+        else return array[index] + SumRecursive722(array, index + 1);
+    }
+
+    //723.Cho mảng một chiều các số thực. Hãy viết hàm đệ quy tính tổng các giá trị dương có trong mảng.
+    public static float SumRecursive723(int[] array, int index) {
+        if (index >= array.length) return 0;
+        else if(array[index] > 0) return array[index] + SumRecursive723(array, index + 1);
+        else return SumRecursive723(array, index + 1);
+    }
+
+    //724.Cho mảng một chiều các số thực. Hãy viết hàm đệ quy tính tích các giá
+    //trị lớn hơn giá trị đứng trước nó trong mảng.
+    public static float SumRecursive724(int[] array, int index) {
+        if (index + 1 >= array.length) return 1;
+        else if(array[index] > array[index+1]) return array[index] * SumRecursive723(array, index + 1);
+        else return SumRecursive723(array, index + 1);
     }
 
     //725
