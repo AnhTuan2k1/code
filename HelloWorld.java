@@ -1,8 +1,5 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 public class HelloWorld {
     public static void main(String[] args) {
@@ -26,7 +23,7 @@ public class HelloWorld {
 
 
         System.out.println("Hello");
-        System.out.println(FindMinPerfectValue151(array));
+        System.out.println(FindMaxDivisorValue171(new int[] {8 , 12, 32}));
         System.out.println(IncreaseNum60(15570));
         System.out.println(CountNum43(2101));
         System.out.println(SumNum44(2101));
@@ -38,7 +35,7 @@ public class HelloWorld {
         System.out.println(ReadNumber105(20));
         DrawTriangle111(5);
         Function120(15);
-        System.out.println(CountPrime120(array));
+        System.out.println(AveragePrimeValue211(array));
         System.out.println(FindFirstValueWithOdd165(array));
         System.out.println(FindMinOddValue(array));
         System.out.println(FindMaxEvenValue169(array));
@@ -583,7 +580,7 @@ public class HelloWorld {
     }
 
     //57. Hãy kiểm tra số nguyên dương n có toàn chữ số chẵn hay không?
-    public static boolean IsAllOddNum57(int n){
+    public static boolean IsAllEvenNum57(int n){
         while (n > 0) {
             if((n%10)%2==1) return false;
             n = n/10;
@@ -1160,6 +1157,48 @@ public class HelloWorld {
         }
         return negative == 1 ? -1 : negative;
     }
+
+    //159.Cho mảng một chiều các số thực hãy tìm giá trị đầu tiên lớn hơn giá trị
+    //2003 (dautien). Nếu mảng không có giá trị thỏa điều kiện trên thì hàm
+    //trả về giá trị là 0.
+    public static int FindFirstValue159(int[] array) {
+        int value = 0;
+        for (int i = array.length - 1; i >= 0; i--) {
+            if(array[i] > 2003) value = array[i];
+        }
+        return value;
+    }
+
+    //161.Cho mảng một chiều các số nguyên, hãy tìm giá trị đầu tiên trong mảng
+    //nằm trong khoảng (x,y) cho trước (dautientrongdoan). Nếu mảng
+    //không có giá trị thỏa điều kiện trên thì hàm trả về giá trị là x.
+
+    public static int FindFirstValue161(int[] array, int x, int y) {
+        for (int i = 0; i < array.length; i++) {
+            if(array[i] > x && array[i] < y) return array[i];
+        }
+        return x;
+    }
+
+    //162.Cho mảng một chiều các số thực. Hãy viết hàm tìm một vị trí trong
+    //mảng thỏa hai điền kiện: có hai giá trị lân cận và giá trị tại vịt trí đó
+    //bằng tích hai gia trị lân cận. Nếu mảng không tồn tại giá trị như vậy thì
+    //hàm trả về giá trị - 1.
+    public static int FindCloseValue162(int[] array) {
+        for (int i = 0; i < array.length - 2; i++) {
+            if(array[i]*array[i+2] == array[i+1]) return i;
+        }
+        return -1;
+    }
+
+    //163.Tìm số chính phương đầu tiên trong mảng một chiều các số nguyên.
+    static int FindFirstPerfectSquare163(int[] array) {
+        for (int num : array) {
+            if (IsPerfectsquare32(num)) return num;
+        }
+        return 0; 
+    }
+
     //165. 
     static int FindFirstValueWithOdd165(int[] array) {
         for (int num : array) {
@@ -1177,7 +1216,22 @@ public class HelloWorld {
         return (firstNum % 2 != 0);
     }
 
-    //169. 
+    //167.Hãy tìm giá trị thỏa điều kiện toàn chữ số lẻ và là giá trị lớn nhất thỏa
+    //điều kiện ấy trong mảng một chiều các số nguyên (nếu mảng không có
+    //giá trị thỏa điều kiện trên thì hàm trả về giá trị 0).
+    public static int FindMaxAllOddValue167(int[] array) {
+        int odd = -999998;
+        for (int num : array) {
+            if ( num > odd && IsAllOddNum56(num)) {
+                odd = num;
+            }
+        }
+
+        return odd == -999998 ? 0 : odd;
+    }
+
+    //169.(*) Cho mảng một chiều các số nguyên. Hãy viết hàm tìm số chẵn lớn
+    //nhất nhỏ hơn mọi giá trị lẻ có trong mảng. 
     public static int FindMaxEvenValue169(int[] array) {
         int maxPositive = -99999;
         int minOddvalue = FindMinOddValue(array);
@@ -1220,6 +1274,143 @@ public class HelloWorld {
 
         return closest;
     }
+
+    //171.Cho mảng một chiều các số nguyên dương. Hãy viết hàm tìm ước
+    //chung lớn nhất của tất cả các phần tử trong mảng.
+    public static int FindMaxDivisorValue171(int[] array) {
+        int maxvalue = Arrays.stream(array).min().getAsInt();
+
+        for (int value = maxvalue; value > 1; value--) {
+            for (int i = 0; i < array.length; i++) {
+                if(array[i] % value != 0) break;
+                else if(i == array.length - 1){
+                    return value;
+                }
+            }
+        }
+
+        return 1;
+    }
+
+    //172.Cho mảng một chiều các số nguyên dương. Hãy viết hàm tìm bội
+    //chung nhỏ nhất của tất cả các phần tử trong mảng.
+    public static int FindMinMutiple172(int[] array) {
+        int minMutiple = Arrays.stream(array).max().getAsInt();
+        int maxMutiple = Arrays.stream(array).reduce(1, (a, b) -> a*b);
+        while (minMutiple < maxMutiple) {
+
+            for (int i = 0; i < array.length; i++) {
+                if(array[i] % minMutiple != 0) break;
+                else if(i == array.length - 1){
+                    return minMutiple;
+                }
+            }
+ 
+            minMutiple++;
+        }
+
+        return maxMutiple;
+    }
+
+    //200.Tính tổng các phần tử trong mảng (tonggiatri).
+    public static int Sum200(int[] array) {
+        return Arrays.stream(array).sum();
+    }
+    
+    //201.Tính tổng các giá trị dương trong mảng một chiều các số thực
+    public static int SumPositive201(int[] array) {
+        return Arrays.stream(array).filter(value->value>0).sum();
+    }
+
+    //202.Tính tổng các giá trị có chữ số đầu tiên là chữ số lẻ trong mảng một
+    //chiều các số nguyên (tongdaule).
+    public static int SumFirstOddValue201(int[] array) {
+        return Arrays.stream(array).filter(value->FirstNumOdd(value)).sum();
+    }
+
+    //203.Tính tổng các giá trị có chữ số hàng chục là chữ số 5 có trong mảng các
+    //số nguyên (tongchuc).
+    public static int SumTen5Value203(int[] array) {
+        return Arrays.stream(array).filter(value->(value/10)%10==5).sum();
+    }
+
+    //204.Tính tổng các giá trị lớn hơn giá trị đứng liền trước nó trong mảng một
+    //chiều các số thực.
+    public static int SumBiggerPrecedingValue204(int[] array) {
+        int sum = 0;
+        for (int i = 1; i < array.length; i++) {
+            if(array[i] > array[i-1]) sum+=array[i];
+        }
+        return sum;
+    }
+
+    //205.Tính tổng các giá trị lớn hơn trị tuyệt đối của giá trị đứng liền sau nó
+    //trong mảng một chiều các số thực.
+    public static int SumBiggerSucceedingValue205(int[] array) {
+        int sum = 0;
+        for (int i = 0; i < array.length - 1; i++) {
+            if(array[i] > Math.abs(array[i+1])) sum+=array[i];
+        }
+        return sum;
+    }
+
+    //206.Tính tổng các giá trị lớn hơn các giá trị xung quanh trong mảng một
+    //chiều các số thực (tongcucdai).
+    //Lưu ý: Một giá trị trong mảng có tối đa hai giá trị xung quanh.
+    public static int SumBiggerAroundValue206(int[] array) {
+        int sum = 0;
+        for (int i = 1; i < array.length - 1; i++) {
+            if(array[i-1] < array[i] && array[i] > array[i+1]) sum+=array[i];
+        }
+        return sum;
+    }
+
+    //207.Tính tổng các phần tử “cực trị” trong mảng (tongcuctri). Một phần tử
+    //được gọi là cực trị khi nó lớn hơn hoặc nhỏ hơn các phần tử xung
+    //quanh nó.
+    public static int SumBiggerOrSmallAroundValue207(int[] array) {
+        int sum = 0;
+        for (int i = 1; i < array.length - 1; i++) {
+            if(array[i-1] < array[i] && array[i] > array[i+1]
+            ||array[i-1] > array[i] && array[i] < array[i+1]) sum+=array[i];
+        }
+        return sum;
+    }
+
+    //208.Tính tổng các giá trị chính phương trong mảng một chiều các số
+    //nguyên (tongchinhphuong).
+    public static int SumPerfectSquareValue208(int[] array) {
+        return Arrays.stream(array).filter(value->IsPerfectsquare32(value)).sum();
+    }
+
+    //209.Tính tổng các giá trị đối xứng trong mảng các số nguyên
+    //(tongdoixung).
+    public static int SumSymmetricValue209(int[] array) {
+        int sum = 0;
+        for (int i = 0; i < array.length/2; i++) {
+            if(array[i] == array[array.length - i - 1]) sum+=array[i]*2;
+        }
+        return sum;
+    }
+
+    //210.Tính tổng các giá trị có chữ số đầu tiên là chữ số chẵn có trong mảng
+    //các số nguyên (tongdauchan).
+    public static int SumFirstEvenValue210(int[] array) {
+        return Arrays.stream(array).filter(value->
+        { 
+            while (value >= 10) {
+                value = value/10;
+            }
+            return value%2 == 0;
+        }).sum();
+    }
+
+    //211.Tính trung bình cộng các số nguyên tố trong mảng một chiều các số nguyên.
+    public static double AveragePrimeValue211(int[] array) {
+        return Arrays.stream(array).filter(value-> IsPrime31(value)).average().orElse(0);
+    }
+
+    //212.Tính trung bình cộng các số dương trong mảng một chiều các số thực.
 
     //300.Đếm số lượng mảng con giảm trong mảng một chiều
     public static int CountDecreasingArray300(int[] array) {
